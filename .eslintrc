@@ -1,0 +1,23 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "prettier",
+        "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
+    "parserOptions": {
+        "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
+        "sourceType": "module" // Allows for the use of imports
+    },
+    "env": { "es6": true, "node": true, "browser": true },
+    "plugins": ["prettier", "simple-import-sort"],
+    "rules": {
+        "prettier/prettier": "error",
+        "simple-import-sort/imports": "error",
+        "react/prop-types": "off", //typescript get it.
+        "no-undef": "off", //disable eslint undef rule, because TS will get it;
+        "react/react-in-jsx-scope": "off" // React 17
+    }
+}
