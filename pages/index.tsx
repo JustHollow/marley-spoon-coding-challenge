@@ -1,9 +1,8 @@
-import { useQuery } from "@apollo/client";
 import Container from "@components/Container";
 import Header from "@components/Header";
 import Layout from "@components/Layout";
-import { ALL_RECIPE_QUERY } from "@lib/api/recipe/queries";
-import { API_RecipeCollection_Response } from "@lib/api/recipe/response";
+import RecipesList from "@components/Recipes/List";
+import { getAllRecipes } from "@lib/api/recipe/queries";
 import {
     addApolloState,
     ApolloPageProps,
@@ -14,17 +13,6 @@ import Head from "next/head";
 
 type IndexPageProps = ApolloPageProps["props"];
 const IndexPage: NextPage<IndexPageProps> = () => {
-    const { loading, error, data } = useQuery<
-        API_RecipeCollection_Response["data"]
-    >(ALL_RECIPE_QUERY, {
-        notifyOnNetworkStatusChange: true,
-    });
-
-    if (error) return <div>Error loading posts</div>;
-    if (loading) return <div>Loading</div>;
-
-    const { recipeCollection } = data;
-
     return (
         <>
             <Layout>
@@ -33,12 +21,7 @@ const IndexPage: NextPage<IndexPageProps> = () => {
                 </Head>
                 <Header />
                 <Container>
-                    {recipeCollection.items.map((recipe, idx) => (
-                        <article key={`${recipe.title}_${idx}`}>
-                            <h2>{recipe.title}</h2>
-                            <img src={recipe.photo.url} alt="" />
-                        </article>
-                    ))}
+                    <RecipesList />
                 </Container>
             </Layout>
         </>
@@ -48,11 +31,9 @@ const IndexPage: NextPage<IndexPageProps> = () => {
 export const getStaticProps: GetStaticProps<
     ApolloPageProps["props"]
 > = async () => {
-    const apolloClient = initializeApollo();
+    const { apolloClient, request } = getAllRecipes();
 
-    await apolloClient.query({
-        query: ALL_RECIPE_QUERY,
-    });
+    await request;
 
     return addApolloState(apolloClient, {
         props: {},

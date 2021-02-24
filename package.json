@@ -2,7 +2,7 @@
   "name": "cms-contentful",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next",
+    "dev": "next & npm run sass-gen",
     "build": "next build",
     "start": "next start",
     "setup": "node ./contentful/setup.js $CONTENTFUL_SPACE_ID $CONTENTFUL_MANAGEMENT_TOKEN",
@@ -11,11 +11,13 @@
     "prettier": "npm run prettier:check -- --write",
     "eslint:check": "eslint \"{pages,src,lib,contentful,styles,test}/**/*{ts,tsx}\"",
     "eslint": "npm run eslint:check -- --fix",
-    "type-check": "tsc --pretty --noEmit"
+    "type-check": "tsc --pretty --noEmit",
+    "sass-gen": "tsm src -w --nameFormat dashes"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "14.1.2",
     "classnames": "2.2.6",
+    "clsx": "^1.1.1",
     "date-fns": "2.17.0",
     "graphql": "^15.5.0",
     "lodash": "^4.17.21",
