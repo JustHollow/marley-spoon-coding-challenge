@@ -2,7 +2,7 @@ import Container from "@components/Container";
 import Header from "@components/Header";
 import Layout from "@components/Layout";
 import SectionSeparator from "@components/Section-separator";
-import { API_RecipeCollection_Response } from "@lib/post/response";
+import { API_RecipeCollection_Response } from "@lib/api/recipe/response";
 import { GetServerSideProps, NextPage } from "next";
 import ErrorPage from "next/error";
 import Head from "next/head";

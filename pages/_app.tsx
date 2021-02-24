@@ -1,8 +1,17 @@
 import "../styles/index.css";
 
-type MyAppProps = { Component: React.ElementType; pageProps: unknown };
+import { ApolloProvider } from "@apollo/client";
+import { ApolloPageProps, useApollo } from "@lib/apolloClient";
+
+type MyAppProps = { Component: React.ElementType; pageProps: ApolloPageProps };
 const MyApp = ({ Component, pageProps }: MyAppProps): JSX.Element => {
-    return <Component {...pageProps} />;
+    const apolloClient = useApollo(pageProps);
+
+    return (
+        <ApolloProvider client={apolloClient}>
+            <Component {...pageProps} />
+        </ApolloProvider>
+    );
 };
 
 export default MyApp;

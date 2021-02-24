@@ -1,5 +1,4 @@
-
-### Step 1. Run Next.js in development mode
+### Step 1. Set credentials
 
 Add to `.env` credentials:
 
