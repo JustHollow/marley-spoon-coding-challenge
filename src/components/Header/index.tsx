@@ -5,7 +5,7 @@ const Header = (): JSX.Element => {
         <>
             <h2 className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-20 mt-8">
                 <Link href="/">
-                    <a className="hover:underline">Recipes.</a>
+                    <a className="underline">Recipes.</a>
                 </Link>
             </h2>
         </>

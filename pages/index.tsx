@@ -3,28 +3,22 @@ import Header from "@components/Header";
 import Layout from "@components/Layout";
 import RecipesList from "@components/Recipes/List";
 import { getAllRecipes } from "@lib/api/recipe/queries";
-import {
-    addApolloState,
-    ApolloPageProps,
-    initializeApollo,
-} from "@lib/apolloClient";
+import { addApolloState, ApolloPageProps } from "@lib/apolloClient";
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 
 type IndexPageProps = ApolloPageProps["props"];
 const IndexPage: NextPage<IndexPageProps> = () => {
     return (
-        <>
-            <Layout>
-                <Head>
-                    <title>Coding Challenge</title>
-                </Head>
+        <Layout>
+            <Head>
+                <title>Coding Challenge</title>
+            </Head>
+            <Container>
                 <Header />
-                <Container>
-                    <RecipesList />
-                </Container>
-            </Layout>
-        </>
+                <RecipesList />
+            </Container>
+        </Layout>
     );
 };
 
@@ -33,7 +27,7 @@ export const getStaticProps: GetStaticProps<
 > = async () => {
     const { apolloClient, request } = getAllRecipes();
 
-    await request;
+    await request();
 
     return addApolloState(apolloClient, {
         props: {},

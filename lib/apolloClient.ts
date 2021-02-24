@@ -4,7 +4,6 @@ import {
     InMemoryCache,
     NormalizedCacheObject,
 } from "@apollo/client";
-import { concatPagination } from "@apollo/client/utilities";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import { useMemo } from "react";
@@ -12,12 +11,11 @@ import { useMemo } from "react";
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
 type AppApoloClient = ApolloClient<NormalizedCacheObject>;
-export type ApolloPageProps =
+export type ApolloPageProps<AdditionalProps = Record<string, unknown>> =
     | {
           props: {
               [APOLLO_STATE_PROP_NAME]?: NormalizedCacheObject;
-              [key: string]: unknown;
-          };
+          } & AdditionalProps;
       }
     | undefined;
 
@@ -27,22 +25,23 @@ const createApolloClient = () => {
     return new ApolloClient({
         ssrMode: typeof window === "undefined",
         link: new HttpLink({
-            uri: `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
+            uri: `https://graphql.contentful.com/content/v1/spaces/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}`,
             headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN}`,
             },
             credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
         }),
-        cache: new InMemoryCache({
-            typePolicies: {
-                Query: {
-                    fields: {
-                        recipeCollection: concatPagination(),
-                    },
-                },
+        cache: new InMemoryCache(),
+        defaultOptions: {
+            watchQuery: {
+                fetchPolicy: "no-cache",
+                errorPolicy: "ignore",
             },
-        }),
+            query: {
+                fetchPolicy: "no-cache",
+                errorPolicy: "all",
+            },
+        },
     });
 };
 
@@ -77,10 +76,10 @@ export function initializeApollo(initialState = null): AppApoloClient {
     return _apolloClient;
 }
 
-export function addApolloState(
+export function addApolloState<PageProps extends Record<string, unknown>>(
     client: AppApoloClient,
-    pageProps: ApolloPageProps
-): ApolloPageProps {
+    pageProps: ApolloPageProps<PageProps>
+): ApolloPageProps<PageProps> {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
     return pageProps;
 }

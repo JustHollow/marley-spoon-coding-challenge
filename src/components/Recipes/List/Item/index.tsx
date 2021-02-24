@@ -1,4 +1,4 @@
-import { API_RecipeCollection_Response } from "@lib/api/recipe/response";
+import { API_RecipeCollection_Response } from "@lib/api/recipe/types/API_RecipeCollection_Response";
 import Link from "next/link";
 
 type RecipesItemProps = {
@@ -7,7 +7,7 @@ type RecipesItemProps = {
 
 const RecipesItem = ({ recipe }: RecipesItemProps): JSX.Element => {
     return (
-        <Link href={`/recipe/${recipe.title}`}>
+        <Link href={`/recipe/${encodeURI(recipe.title)}`}>
             <a>
                 <article className="flex flex-col gap-2 shadow-md px-4 py-3 h-full">
                     <img

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { getAllRecipes } from "@lib/api/recipe/queries";
-import { API_RecipeCollection_Response } from "@lib/api/recipe/response";
+import { API_RecipeCollection_Response } from "@lib/api/recipe/types/API_RecipeCollection_Response";
 import clsx from "clsx";
 
 import RecipesItem from "./Item";
