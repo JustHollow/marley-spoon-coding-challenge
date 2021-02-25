@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Head from "next/head";
 import Link from "next/link";
 
-type RecipeProps = { title: string };
+export type RecipeProps = { title: string };
 const Recipe = (props: RecipeProps): JSX.Element => {
     const { query } = getRecipeByTitle({ title: props.title });
     const { loading, error, data } = useQuery<

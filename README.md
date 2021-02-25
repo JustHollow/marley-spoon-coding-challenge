@@ -18,3 +18,6 @@ npm run dev
 yarn install
 yarn dev
 ```
+
+### Step 3. Open page in browser
+http://localhost:3000/

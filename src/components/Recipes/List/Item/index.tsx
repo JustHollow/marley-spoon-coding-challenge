@@ -1,7 +1,7 @@
 import { API_RecipeCollection_Response } from "@lib/api/recipe/types/API_RecipeCollection_Response";
 import Link from "next/link";
 
-type RecipesItemProps = {
+export type RecipesItemProps = {
     recipe: API_RecipeCollection_Response["data"]["recipeCollection"]["items"][0];
 };
 

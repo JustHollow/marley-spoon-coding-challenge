@@ -4,6 +4,7 @@ import {
     InMemoryCache,
     NormalizedCacheObject,
 } from "@apollo/client";
+import crossFetch from "cross-fetch";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import { useMemo } from "react";
@@ -23,8 +24,9 @@ let apolloClient: AppApoloClient | undefined;
 
 const createApolloClient = () => {
     return new ApolloClient({
-        ssrMode: typeof window === "undefined",
+        ssrMode: !process.browser,
         link: new HttpLink({
+            fetch: crossFetch,
             uri: `https://graphql.contentful.com/content/v1/spaces/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}`,
             headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN}`,

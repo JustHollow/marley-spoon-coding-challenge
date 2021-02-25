@@ -16,7 +16,6 @@ const RecipesList = (): JSX.Element => {
 
     if (error) return <div>Error loading posts</div>;
     if (loading) return <div>Loading</div>;
-
     const { recipeCollection } = data;
 
     return (

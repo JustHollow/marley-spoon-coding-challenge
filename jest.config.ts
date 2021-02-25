@@ -3,7 +3,7 @@ import { pathsToModuleNameMapper } from "ts-jest/utils";
 
 import { compilerOptions } from "./tsconfig.json";
 
-const moduleNameMapper = pathsToModuleNameMapper(compilerOptions.paths, {
+const tsModuleNameMapper = pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: "<rootDir>/",
 });
 
@@ -18,7 +18,10 @@ const config: Config.InitialOptions = {
             tsconfig: "tsconfig.jest.json",
         },
     },
-    moduleNameMapper,
+    moduleNameMapper: {
+        ...tsModuleNameMapper,
+        "^.+\\.(css|less|sass|scss)$": "<rootDir>/test/__mocks__/styleMock.ts",
+    },
     collectCoverageFrom: ["src/**/*.{ts,tsx}"],
     setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
 };
